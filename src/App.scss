@@ -1,3 +1,5 @@
+@import "./styles/colors";
+
 .App {
   text-align: center;
 }
@@ -28,6 +30,20 @@
   color: #61dafb;
 }
 
+html, body, #root, .main {
+  height: 100%;
+  width: 100%;
+}
+
+body {
+  background-color: $color-background;
+  color: $color-background-contrast;
+}
+
+hr {
+  margin: 1rem 0;
+}
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
@@ -36,3 +52,5 @@
     transform: rotate(360deg);
   }
 }
+
+@import "./styles/main";
