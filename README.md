@@ -75,9 +75,10 @@ Login page: The page is really a landing page where a player hasn't entered a ga
 
  Game room:
  - (start): wait for other players. Up to ten slots to be filled. Start button at bottom.
+ - each player is prompted to enter personal information (just things like height and eye color and whatnot)
 
  Game start (after start is clicked):
- - Every player see a screen that shows the basic rules of the entire game. Start button at bottom.
+ - Every player sees a screen that shows the basic rules of the entire game. Start button at bottom.
  - Once everyone is in, the first game starts.
 
  Game (Game is broken up into episodes):
