@@ -1,0 +1,29 @@
+.hr-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    &.vertical {
+        flex-direction: column;
+    }
+
+    .hr-left, .hr-right {
+        flex-grow: 1;
+
+        hr {
+            border-color: white;
+        }
+    }
+
+    .hr-left {
+        padding-right: 1rem;
+    }
+
+    .hr-right {
+        padding-left: 1rem;
+    }
+
+    .hr-center {
+        flex-shrink: 1;
+    }
+}
