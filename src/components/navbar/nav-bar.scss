@@ -1,0 +1,50 @@
+.nav-bar {
+    position: relative;
+    padding: 0.75rem;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    .title {
+        text-align: center;
+    }
+
+    .left-column, .right-column {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        flex-grow: 1;
+    }
+
+    .left-column {
+        float: left;
+        text-align: left;
+        justify-content: flex-start;
+    }
+
+    .center-column {
+        float: none;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+
+    .right-column {
+        float: right;
+        text-align: right;
+        justify-content: flex-end;
+    }
+
+    .button {
+        padding: 0;
+
+        + .button {
+            margin-left: 0.5rem;
+        }
+
+        &.menu-button {
+            height: 24px;
+        }
+    }
+}
