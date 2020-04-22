@@ -1,0 +1,58 @@
+form {
+    overflow: auto;
+
+    .form-group {
+        width: 100%;
+        margin-top: 1rem;
+
+        label, input {
+            width: 100%;
+        }
+
+        label {
+            display: inline-block;
+            margin-bottom: 0.25rem;
+        }
+
+        input[type="text"] {
+            box-sizing: border-box;
+            height: 3rem;
+            border-radius: 5px;
+            border: none;
+            padding: 0.125rem 0.5rem;
+            font-size: 16px;
+        }
+
+        button {
+            width: 200px;
+            height: 3rem;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: block;
+
+            @media only screen and (max-width: 540px) {
+                width: 100%;
+            }
+        }
+
+        &.input-group {
+            content: "";
+            clear: both;
+            display: table;
+
+            input[type="text"] {
+                width: 75%;
+                float: left;
+                border-top-right-radius: 0;
+                border-bottom-right-radius: 0;
+            }
+
+            button {
+                width: 25%;
+                float: left;
+                border-top-left-radius: 0;
+                border-bottom-left-radius: 0;
+            }
+        }
+    }
+}

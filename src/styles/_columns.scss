@@ -1,0 +1,127 @@
+.col-xs-1, .col-sm-1, .col-md-1, .col-lg-1, .col-xl-1 { width: 8.3333% }
+.col-xs-2, .col-sm-2, .col-md-2, .col-lg-2, .col-xl-2 { width: 16.6666% }
+.col-xs-3, .col-sm-3, .col-md-3, .col-lg-3, .col-xl-3 { width: 25% }
+.col-xs-4, .col-sm-4, .col-md-4, .col-lg-4, .col-xl-4 { width: 33.3333% }
+.col-xs-5, .col-sm-5, .col-md-5, .col-lg-5, .col-xl-5 { width: 41.6666% }
+.col-xs-6, .col-sm-6, .col-md-6, .col-lg-6, .col-xl-6 { width: 50% }
+.col-xs-7, .col-sm-7, .col-md-7, .col-lg-7, .col-xl-7 { width: 58.3333% }
+.col-xs-8, .col-sm-8, .col-md-8, .col-lg-8, .col-xl-8 { width: 66.6666% }
+.col-xs-9, .col-sm-9, .col-md-9, .col-lg-9, .col-xl-9 { width: 75% }
+.col-xs-10, .col-sm-10, .col-md-10, .col-lg-10, .col-xl-10 { width: 83.3333% }
+.col-xs-11, .col-sm-11, .col-md-11, .col-lg-11, .col-xl-11 { width: 91.6666% }
+.col-xs-12, .col-sm-12, .col-md-12, .col-lg-12, .col-xl-12 { width: 100% }
+
+.mt-0 {
+    margin-top: 0 !important;
+}
+
+.pl-0 {
+    padding-left: 0;
+}
+
+.pr-0 {
+    padding-right: 0;
+}
+
+[class*="col-"] {
+    float: left;
+    margin-top: 1rem;
+    padding: 0 1rem;
+    box-sizing: border-box;
+}
+
+.row {
+    width: 100%;
+    overflow: auto;
+    box-sizing: border-box;
+}
+
+@media only screen and (max-width: 360px) {
+    [class*="col-xs-"] {
+        width: 100%;
+    }
+
+    .pl-xs-0 {
+        padding-left: 0;
+    }
+
+    .pr-xs-0 {
+        padding-right: 0;
+    }
+
+    .mt-xs-0 {
+        margin-top: 0;
+    }
+}
+
+@media only screen and (max-width: 540px) {
+    [class*="col-sm-"] {
+        width: 100%;
+    }
+
+    .pl-sm-0 {
+        padding-left: 0;
+    }
+
+    .pr-sm-0 {
+        padding-right: 0;
+    }
+
+    .mt-sm-0 {
+        margin-top: 0;
+    }
+}
+
+@media only screen and (max-width: 991px) {
+    [class*="col-md-"] {
+        width: 100%;
+    }
+
+    .pl-md-0 {
+        padding-left: 0;
+    }
+
+    .pr-md-0 {
+        padding-right: 0;
+    }
+
+    .mt-md-0 {
+        margin-top: 0;
+    }
+}
+
+@media only screen and (max-width: 1200px) {
+    [class*="col-lg-"] {
+        width: 100%;
+    }
+
+    .pl-lg-0 {
+        padding-left: 0;
+    }
+
+    .pr-lg-0 {
+        padding-right: 0;
+    }
+
+    .mt-lg-0 {
+        margin-top: 0;
+    }
+}
+
+@media only screen and (max-width: 1440px) {
+    [class*="col-xl-"] {
+        width: 100%;
+    }
+
+    .pl-xl-0 {
+        padding-left: 0;
+    }
+
+    .pr-xl-0 {
+        padding-right: 0;
+    }
+
+    .mt-xl-0 {
+        margin-top: 0;
+    }
+}

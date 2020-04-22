@@ -1,0 +1,45 @@
+@import "./colors";
+
+.panel {
+    box-sizing: border-box;
+    overflow: auto;
+
+    &.panel-primary {
+        background-color: $color-primary;
+        color: $color-primary-contrast;   
+    }
+    
+    &.panel-body {
+        background-color: $color-background;
+        color: $color-background-contrast;
+    }
+
+    &.centered-panel {
+        margin: 0 auto;
+        width: 100%;
+
+        @media only screen and (min-width: 1200px) {
+            &.centered-panel-large {
+                width: 1000px;
+            }
+        }
+
+        @media only screen and (min-width: 991px) {
+            &.centered-panel-medium {
+                width: 600px;
+            }
+        }
+
+        @media only screen and (min-width: 540px) {
+            &.centered-panel-small {
+                width: 360px;
+            }
+        }
+    }
+}
+
+.main {
+    > .panel {
+        padding: 1rem;
+    }
+}

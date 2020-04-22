@@ -1,0 +1,39 @@
+@import "./colors";
+@import "./vars";
+
+.button {
+    cursor: pointer;
+
+    border: none;
+    border-radius: $border-radius;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-color: transparent;
+
+    padding: 0.75rem 1rem;
+    font-size: 16px;
+
+    &.icon-button {
+        &.icon-button-light {
+            color: $white;
+        }
+
+        &.icon-button-dark {
+            color: $black;
+        }
+
+        i.material-icons.menu {
+            margin-top: 1px;
+        }
+    }
+
+    &.button-primary {
+        background-color: $color-primary;
+        color: $color-primary-contrast;
+    }
+
+    &.button-secondary {
+        background-color: $color-secondary;
+        color: $color-secondary-contrast;
+    }
+}
