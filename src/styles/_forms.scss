@@ -3,7 +3,10 @@ form {
 
     .form-group {
         width: 100%;
-        margin-top: 1rem;
+
+        + .form-group {
+            margin-top: 1rem;
+        }
 
         label, input {
             width: 100%;
