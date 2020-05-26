@@ -1,7 +1,9 @@
 import axios from 'axios';
 
+import { config } from '../constants/environment.constants';
+
 export class ApiHelperService {
-    serviceUrl = 'http://localhost:3001';
+    serviceUrl = config.url.API_URL;
 
     get(url) {
         return this.request(`${this.serviceUrl}/${url}`, 'GET');
