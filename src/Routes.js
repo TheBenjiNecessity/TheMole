@@ -11,6 +11,7 @@ export class Routes extends Component {
     render() {
         return (
             <Switch>
+                <Route path="/GameLobby" component={Game} />
                 <Route path="/Game" component={Game} />
                 <Route exact path="/" component={Home} />
                 <Route component={NoMatch} />
