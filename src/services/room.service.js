@@ -1,16 +1,20 @@
 import { ApiHelperService } from './api-helper.service';
 
-export class RoomService extends ApiHelperService {
-    roomApiUrl = 'host';
+import SocketService from './socket.service';
 
+export class RoomService extends ApiHelperService {
     constructor() {
         super();
         if (!RoomService.shared) { RoomService.shared = this; }
         return RoomService.shared;
     }
-    
-    getRoom() {
-        return this.get(this.roomApiUrl);
+
+    createRoom() {
+        return this.post('create');
+    }
+
+    joinRoom(roomCode, player) {
+        return this.put(`join/${roomCode}`, { player: player });
     }
 }
 
