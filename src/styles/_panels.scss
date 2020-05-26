@@ -3,6 +3,7 @@
 .panel {
     box-sizing: border-box;
     overflow: auto;
+    padding: 1rem;
 
     &.panel-primary {
         background-color: $color-primary;
@@ -35,11 +36,5 @@
                 width: 360px;
             }
         }
-    }
-}
-
-.main {
-    > .panel {
-        padding: 1rem;
     }
 }
