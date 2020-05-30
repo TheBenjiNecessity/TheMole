@@ -27,6 +27,10 @@ export class SocketService extends ApiHelperService {
     createEvent(type, func) {
         this.socket.on(type, func);
     }
+
+	sendMessageToRoom(message, room) {
+		this.socket.emit(message, room);
+	}
 }
 
 const shared = new SocketService();
