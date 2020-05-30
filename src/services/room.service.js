@@ -1,7 +1,5 @@
 import { ApiHelperService } from './api-helper.service';
 
-import SocketService from './socket.service';
-
 export class RoomService extends ApiHelperService {
     constructor() {
         super();
