@@ -67,7 +67,7 @@ class GameLobby extends Component {
     }
 
     render() {
-        let { toGame } = this.state;
+		let { room, toGame } = this.state;
 
         if (toGame) {
             return <Redirect to="/Game" />
@@ -77,7 +77,7 @@ class GameLobby extends Component {
             <div className="main">
                 <NavBar title="The Mole"></NavBar>
                 <div className="panel centered-panel centered-panel-medium">
-                    {room.roomcode}
+					{room ? room.roomcode : ''}
 
                     {this.listPlayerViews()}
 
