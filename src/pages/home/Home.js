@@ -10,7 +10,6 @@ import SocketService from '../../services/socket.service';
 
 import GameController from '../../controllers/game.controller';
 
-import '../../extensions';
 import HRWithTitle from '../../components/hr-with-title/HRWithTitle';
 import { FullScreenLoader } from '../../components/full-screen-loader';
 
