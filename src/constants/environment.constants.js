@@ -1,13 +1,13 @@
 const prod = {
-    url: {
-        API_URL: 'http://api.dotohtwo.com'
-    }
+	url: {
+		API_URL: ''
+	}
 };
 
 const dev = {
-    url: {
-        API_URL: 'http://localhost:3000'
-    }
+	url: {
+		API_URL: 'http://localhost:8999'
+	}
 };
 
 export const config = process.env.NODE_ENV === 'development' ? dev : prod;
