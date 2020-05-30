@@ -5,7 +5,12 @@ class GameController {
     room = null;
     isHost = false;
 
-    constructor() { }
+	constructor() {
+		if (!GameController.shared) {
+			GameController.shared = this;
+		}
+		return GameController.shared;
+	}
 
     setListenForPlayerCB(cb) {
         SocketService.createEvent('add-player', cb)
