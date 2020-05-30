@@ -5,7 +5,8 @@ import { NavBar } from '../../components/navbar';
 
 import GameController from '../../controllers/game.controller';
 
-import '../../extensions';
+import { Redirect } from 'react-router-dom';
+import { PlayerListView } from '../../components/player-list-view';
 
 class GameLobby extends Component {
     constructor(props) {
@@ -56,8 +57,8 @@ class GameLobby extends Component {
 
     getPlayerView(player, key) {
         return (
-            <div key={key} >
-                <PlayerListView player={player}/>
+			<div key={key}>
+				<PlayerListView name={player.name} />
             </div>
         );
     }
