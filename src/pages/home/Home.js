@@ -81,12 +81,12 @@ class Home extends Component {
 
 	render() {
 		let { roomcode, toHostLobby, toGameLobby } = this.state;
-		if (toHostLobby && (!roomcode || roomcode === '')) {
+		if (toHostLobby && !(!roomcode || roomcode === '')) {
 			let url = `/HostLobby?room=${roomcode}`;
 			return <Redirect to={url} />;
 		}
 
-		if (toGameLobby && (!roomcode || roomcode === '')) {
+		if (toGameLobby && !(!roomcode || roomcode === '')) {
 			let url = `/GameLobby?room=${roomcode}`;
 			return <Redirect to={url} />;
 		}
