@@ -5,13 +5,10 @@ import { NavBar } from '../../components/navbar';
 
 import GameController from '../../controllers/game.controller';
 
-import '../../extensions';
-
 class HostLobby extends Component {
     constructor(props) {
         super(props);
 
-        this.onPlay = this.onPlay.bind(this);
         this.listenForPlayers = this.listenForPlayers.bind(this);
         this.listenForPlay = this.listenForPlay.bind(this);
         this.play = this.play.bind(this);
