@@ -54,8 +54,12 @@ class HostLobby extends Component {
     }
 
     listPlayerViews() {
+		if (this.state.room) {
         return this.state.room.players.map((p, i) => this.getPlayerView(p, i));
+		} else {
+			return <div />;
     }
+	}
 
     render() {
         let { toGame } = this.state;
