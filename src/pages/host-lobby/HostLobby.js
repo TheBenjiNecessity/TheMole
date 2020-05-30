@@ -4,6 +4,7 @@ import './host-lobby.scss';
 import { NavBar } from '../../components/navbar';
 
 import GameController from '../../controllers/game.controller';
+import { PlayerListView } from '../../components/player-list-view';
 
 class HostLobby extends Component {
     constructor(props) {
@@ -48,7 +49,7 @@ class HostLobby extends Component {
     getPlayerView(player, key) {
         return (
             <div key={key}>
-                <PlayerListView player={player}/>
+				<PlayerListView name={player.name} />
             </div>
         );
     }
