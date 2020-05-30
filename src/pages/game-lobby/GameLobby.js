@@ -63,6 +63,8 @@ class GameLobby extends Component {
     }
 
     listPlayerViews() {
+		if (!this.state.room || !this.state.room.players.length) return null;
+
         return this.state.room.players.map((p, i) => this.getPlayerView(p, i));
     }
 
