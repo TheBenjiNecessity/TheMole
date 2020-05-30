@@ -91,12 +91,6 @@ class Home extends Component {
 			return <Redirect to={url} />;
 		}
 
-		let roomInput = <input type="text" className="form-control" name="roomcode" onChange={this.onChange} />;
-
-		if (this.state.roomcode) {
-			roomInput = <label>{this.state.roomcode}</label>;
-		}
-
 		return (
 			<div className="main">
 				<NavBar title="The Mole" />
@@ -108,7 +102,7 @@ class Home extends Component {
 						</div>
 						<div className="form-group pl-xs-0 pr-xs-0">
 							<label htmlFor="roomcode">Room Code:</label>
-							{roomInput}
+							<input type="text" className="form-control" name="roomcode" onChange={this.onChange} />
 						</div>
 						<div className="form-group pl-xs-0 pr-xs-0 mt-xs-0">
 							<button type="button" className="button button-primary" onClick={this.onPlay}>
