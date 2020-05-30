@@ -62,7 +62,7 @@ class HostLobby extends Component {
 	}
 
     render() {
-        let { toGame } = this.state;
+		let { toGame, room } = this.state;
 
         if (toGame) {
             return <Redirect to="/Game" />
@@ -72,7 +72,7 @@ class HostLobby extends Component {
             <div className="main">
                 <NavBar title="The Mole"></NavBar>
                 <div className="panel centered-panel centered-panel-medium">
-                    {room.roomcode}
+					{room ? room.roomcode : 'No Code'}
 
                     {this.listPlayerViews()}
                 </div>
