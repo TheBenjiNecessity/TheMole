@@ -9,86 +9,88 @@ import { Redirect } from 'react-router-dom';
 import { PlayerListView } from '../../components/player-list-view';
 
 class GameLobby extends Component {
-    constructor(props) {
-        super(props);
+	constructor(props) {
+		super(props);
 
-        this.onPlay = this.onPlay.bind(this);
-        this.listenForPlayers = this.listenForPlayers.bind(this);
-        this.listenForPlay = this.listenForPlay.bind(this);
-        this.play = this.play.bind(this);
+		this.onPlay = this.onPlay.bind(this);
+		this.listenForPlayers = this.listenForPlayers.bind(this);
+		this.listenForPlay = this.listenForPlay.bind(this);
+		this.play = this.play.bind(this);
 
-        this.state = { room: null, toGame: false };
-    }
+		this.state = { room: null, toGame: false };
+	}
 
-    componentDidMount() {
-        GameController.setListenForPlayerCB(this.listenForPlayers);
-        GameController.setListenForPlayCB(this.listenForPlay);
+	componentDidMount() {
+		GameController.setListenForPlayerCB(this.listenForPlayers);
+		GameController.setListenForPlayCB(this.listenForPlay);
 
-        //get room at start?
-    }
+		//get room at start?
+	}
 
-    componentWillUnmount() {
-        GameController.setListenForPlayerCB(null);
-        GameController.setListenForPlayCB(null);
-    }
+	componentWillUnmount() {
+		GameController.setListenForPlayerCB(null);
+		GameController.setListenForPlayCB(null);
+	}
 
-    onPlay() {
-        // tell room that game has started
-        // go to game
-        this.play(true);
-    }
+	onPlay() {
+		// tell room that game has started
+		// go to game
+		this.play(true);
+	}
 
-    listenForPlayers(obj) {
-        this.setState({room: obj.room});
-    }
+	listenForPlayers(obj) {
+		this.setState({ room: obj.room });
+	}
 
-    listenForPlay(obj) {
-        //this.setState({room: obj.room});
-        this.play(false);
-    }
+	listenForPlay(obj) {
+		//this.setState({room: obj.room});
+		this.play(false);
+	}
 
-    play(local) {
-        if (local) {
-            //send socket message to others
-        }
+	play(local) {
+		if (local) {
+			//send socket message to others
+		}
 
-        this.setState({toGame: true});
-    }
+		this.setState({ toGame: true });
+	}
 
-    getPlayerView(player, key) {
-        return (
+	getPlayerView(player, key) {
+		return (
 			<div key={key}>
 				<PlayerListView name={player.name} />
-            </div>
-        );
-    }
+			</div>
+		);
+	}
 
-    listPlayerViews() {
+	listPlayerViews() {
 		if (!this.state.room || !this.state.room.players.length) return null;
 
-        return this.state.room.players.map((p, i) => this.getPlayerView(p, i));
-    }
+		return this.state.room.players.map((p, i) => this.getPlayerView(p, i));
+	}
 
-    render() {
+	render() {
 		let { room, toGame } = this.state;
 
-        if (toGame) {
-            return <Redirect to="/Game" />
-        }
+		if (toGame) {
+			return <Redirect to="/Game" />;
+		}
 
-        return  (
-            <div className="main">
-                <NavBar title="The Mole"></NavBar>
-                <div className="panel centered-panel centered-panel-medium">
+		return (
+			<div className="main">
+				<NavBar title="The Mole" />
+				<div className="panel centered-panel centered-panel-medium">
 					{room ? room.roomcode : ''}
 
-                    {this.listPlayerViews()}
+					{this.listPlayerViews()}
 
-                    <button type="button" className="button button-primary" onClick={this.onPlay}>Start Game</button>
-                </div>
-            </div>
-        );
-    };
+					<button type="button" className="button button-primary" onClick={this.onPlay}>
+						Start Game
+					</button>
+				</div>
+			</div>
+		);
+	}
 }
 
 export default GameLobby;

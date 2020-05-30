@@ -3,35 +3,35 @@ import axios from 'axios';
 import { config } from '../constants/environment.constants';
 
 export class ApiHelperService {
-    serviceUrl = config.url.API_URL;
+	serviceUrl = config.url.API_URL;
 
-    get(url) {
-        return this.request(`${this.serviceUrl}/${url}`, 'GET');
-    }
+	get(url) {
+		return this.request(`${this.serviceUrl}/${url}`, 'GET');
+	}
 
-    post(url, body, header = 'application/json') {
-        return this.request(`${this.serviceUrl}/${url}`, 'POST', body, header);
-    }
+	post(url, body, header = 'application/json') {
+		return this.request(`${this.serviceUrl}/${url}`, 'POST', body, header);
+	}
 
-    put(url, body) {
-        return this.request(`${this.serviceUrl}/${url}`, 'PUT', body);
-    }
+	put(url, body) {
+		return this.request(`${this.serviceUrl}/${url}`, 'PUT', body);
+	}
 
-    del(url) {
-        return this.request(`${this.serviceUrl}/${url}`, 'DELETE');
-    }
+	del(url) {
+		return this.request(`${this.serviceUrl}/${url}`, 'DELETE');
+	}
 
-    request(url, method, body = null, header = 'application/json') {
-        let headers = {
-            'Content-Type': header
-        };
-        let config = {
-            method: method,
-            url: url,
-            headers: headers,
-            data: body
-        };
-        
-        return axios(config).then(response => response.data);
-    }
+	request(url, method, body = null, header = 'application/json') {
+		let headers = {
+			'Content-Type': header
+		};
+		let config = {
+			method: method,
+			url: url,
+			headers: headers,
+			data: body
+		};
+
+		return axios(config).then((response) => response.data);
+	}
 }
