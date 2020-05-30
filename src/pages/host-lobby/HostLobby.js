@@ -5,6 +5,7 @@ import { NavBar } from '../../components/navbar';
 
 import GameController from '../../controllers/game.controller';
 import { PlayerListView } from '../../components/player-list-view';
+import { Redirect } from 'react-router-dom';
 
 class HostLobby extends Component {
     constructor(props) {
