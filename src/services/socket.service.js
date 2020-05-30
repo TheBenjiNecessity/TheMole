@@ -1,5 +1,7 @@
 import { ApiHelperService } from './api-helper.service';
 
+import io from 'socket.io-client';
+
 export class SocketService extends ApiHelperService {
     constructor() {
         super();
