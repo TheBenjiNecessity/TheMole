@@ -35,15 +35,10 @@ class HostLobby extends Component {
 	}
 
 	listenForPlay(obj) {
-		//this.setState({room: obj.room});
-		this.play(false);
+		this.play();
 	}
 
-	play(local) {
-		if (local) {
-			//send socket message to others
-		}
-
+	play() {
 		this.setState({ toGame: true });
 	}
 
