@@ -22,7 +22,7 @@ class HostLobby extends Component {
 		GameController.setListenForPlayerCB(this.listenForPlayers);
 		GameController.setListenForPlayCB(this.listenForPlay);
 
-		this.setState({ room: GameController.room });
+		this.setState({ room: GameController.getRoom() });
 	}
 
 	componentWillUnmount() {
