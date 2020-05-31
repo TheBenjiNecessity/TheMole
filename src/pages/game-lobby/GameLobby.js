@@ -24,7 +24,7 @@ class GameLobby extends Component {
 		GameController.setListenForPlayerCB(this.listenForPlayers);
 		GameController.setListenForPlayCB(this.listenForPlay);
 
-		//get room at start?
+		this.setState({ room: GameController.getRoom() });
 	}
 
 	componentWillUnmount() {
@@ -50,6 +50,7 @@ class GameLobby extends Component {
 	play(local) {
 		if (local) {
 			//send socket message to others
+			GameController.startPlay();
 		}
 
 		this.setState({ toGame: true });
