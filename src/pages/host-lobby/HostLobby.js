@@ -26,8 +26,8 @@ class HostLobby extends Component {
 	}
 
 	componentWillUnmount() {
-		GameController.setListenForPlayerCB(null);
-		GameController.setListenForPlayCB(null);
+		GameController.stopListenForPlayerCB();
+		GameController.stopListenForPlayCB();
 	}
 
 	listenForPlayers(obj) {
