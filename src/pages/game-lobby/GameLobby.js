@@ -65,9 +65,11 @@ class GameLobby extends Component {
 	}
 
 	listPlayerViews() {
-		if (!this.state.room || !this.state.room.players.length) return null;
-
-		return this.state.room.players.map((p, i) => this.getPlayerView(p, i));
+		if (this.state.room && this.state.room.players && this.state.room.players.length) {
+			return this.state.room.players.map((p, i) => this.getPlayerView(p, i));
+		} else {
+			return <div />;
+		}
 	}
 
 	render() {
@@ -81,13 +83,19 @@ class GameLobby extends Component {
 			<div className="main">
 				<NavBar title="The Mole" />
 				<div className="panel centered-panel centered-panel-medium">
-					{room ? room.roomcode : ''}
-
-					{this.listPlayerViews()}
-
-					<button type="button" className="button button-primary" onClick={this.onPlay}>
-						Start Game
-					</button>
+					<div className="start-button-bar col-sm-12">
+						<button type="button" className="button button-primary" onClick={this.onPlay}>
+							Start Game
+						</button>
+					</div>
+					<div className="form-group pl-xs-0 pr-xs-0 mt-0 col-sm-6">
+						<label>Room Code:</label>
+						<div className="room-code">{room ? room.roomcode : 'No Code'}</div>
+					</div>
+					<div className="form-group pl-xs-0 pr-xs-0 mt-0 col-sm-6">
+						<label>Players:</label>
+						<div className="player-list">{this.listPlayerViews()}</div>
+					</div>
 				</div>
 			</div>
 		);
