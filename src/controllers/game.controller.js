@@ -20,6 +20,14 @@ class GameController {
 		SocketService.createEvent('play', cb);
 	}
 
+	stopListenForPlayerCB() {
+		SocketService.destroyEvent('add-player');
+	}
+
+	stopListenForPlayCB() {
+		SocketService.destroyEvent('play');
+	}
+
 	setCurrentPlayer(player) {
 		this.player = player;
 	}
