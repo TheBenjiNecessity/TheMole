@@ -58,8 +58,13 @@ class Home extends Component {
 					this.setState({ toGameLobby: true, toHostLobby: false });
 				})
 				.catch((error) => {
-					let errorMessages = ErrorsService.getErrorMessages(error.errors);
-					alert(errorMessages);
+					if (error.errors) {
+						let errorMessages = ErrorsService.getErrorMessages(error.errors);
+						alert(errorMessages);
+					} else {
+						let errorMessage = error.error ? error.error : error.message;
+						alert(errorMessage);
+					}
 				});
 		}
 	}
