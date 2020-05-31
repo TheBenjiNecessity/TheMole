@@ -28,8 +28,8 @@ class GameLobby extends Component {
 	}
 
 	componentWillUnmount() {
-		GameController.setListenForPlayerCB(null);
-		GameController.setListenForPlayCB(null);
+		GameController.stopListenForPlayerCB();
+		GameController.stopListenForPlayCB();
 	}
 
 	onPlay() {
