@@ -54,6 +54,7 @@ class Home extends Component {
 					SocketService.createService(response.web_socket_url, response.room);
 					GameController.setCurrentPlayer(response.player);
 					GameController.setRoom(response.room);
+					GameController.setWSUrl(response.web_socket_url);
 					this.setState({ toGameLobby: true, toHostLobby: false });
 				})
 				.catch((error) => {
@@ -68,6 +69,7 @@ class Home extends Component {
 		RoomService.createRoom().then((response) => {
 			SocketService.createService(response.web_socket_url, response.room);
 			GameController.setRoom(response.room);
+			GameController.setWSUrl(response.web_socket_url);
 			GameController.isHost = true;
 			this.setState({ loading: false, roomcode: response.room.roomcode, toHostLobby: true, toGameLobby: false });
 		});
