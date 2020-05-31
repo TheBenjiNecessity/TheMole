@@ -69,9 +69,16 @@ class HostLobby extends Component {
 			<div className="main">
 				<NavBar title="The Mole" />
 				<div className="panel centered-panel centered-panel-medium">
-					{room ? room.roomcode : 'No Code'}
-
-					{this.listPlayerViews()}
+					<div className="titla-message col-sm-12">Press "Start Game" to start the game</div>
+					<hr />
+					<div className="form-group pl-xs-0 pr-xs-0 mt-0 col-sm-6">
+						<label>Room Code:</label>
+						<div className="room-code">{room ? room.roomcode : 'No Code'}</div>
+					</div>
+					<div className="form-group pl-xs-0 pr-xs-0 mt-0 col-sm-6">
+						<label>Players:</label>
+						<div className="player-list">{this.listPlayerViews()}</div>
+					</div>
 				</div>
 			</div>
 		);
