@@ -1,15 +1,15 @@
-import { ApiHelperService } from './api-helper.service';
-
 import io from 'socket.io-client';
 
-export class SocketService extends ApiHelperService {
-	constructor() {
-		super();
+import GameController from '../controllers/game.controller';
 
+export class SocketService {
+	constructor() {
 		this.connection = null;
 		this.onMessageCB = null;
 
 		this.socket = null;
+
+		this.createService();
 
 		if (!SocketService.shared) {
 			SocketService.shared = this;
@@ -18,20 +18,58 @@ export class SocketService extends ApiHelperService {
 	}
 
 	createService(url, room) {
-		this.socket = io.connect(url);
-		this.joinRoom(room.roomcode);
+		if (url && room) {
+			this.socket = io.connect(url);
+			this.joinRoom(room.roomcode);
+			return true;
+		} else {
+			let gRoom = GameController.getRoom();
+			let gUrl = GameController.getWSUrl();
+
+			if (gRoom && gUrl) {
+				this.socket = io.connect(gUrl);
+				this.joinRoom(gRoom.roomcode);
+				return true;
+			} else {
+				return false;
+			}
+		}
 	}
 
 	joinRoom(room) {
-		this.socket.emit('join', room);
+		if (this.socket) {
+			this.socket.emit('join', room);
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	createEvent(type, func) {
-		this.socket.on(type, func);
+		if (this.socket) {
+			this.socket.on(type, func);
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	destroyEvent(type) {
+		if (this.socket) {
+			this.socket.off(type);
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	sendMessageToRoom(message, room) {
-		this.socket.emit(message, room);
+		if (this.socket) {
+			this.socket.emit(message, room);
+			return true;
+		} else {
+			return false;
+		}
 	}
 }
 
