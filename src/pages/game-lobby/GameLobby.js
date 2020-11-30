@@ -3,10 +3,12 @@ import React, { Component } from 'react';
 import './game-lobby.scss';
 import { NavBar } from '../../components/navbar';
 
+import RoomService from '../../services/room.service';
 import GameController from '../../controllers/game.controller';
 
 import { Redirect } from 'react-router-dom';
 import { PlayerListView } from '../../components/player-list-view';
+import { FullScreenLoader } from '../../components/full-screen-loader';
 
 class GameLobby extends Component {
 	constructor(props) {
@@ -17,14 +19,23 @@ class GameLobby extends Component {
 		this.listenForPlay = this.listenForPlay.bind(this);
 		this.play = this.play.bind(this);
 
-		this.state = { room: null, toGame: false };
+		this.state = { room: null, toGame: false, toHome: false };
 	}
 
 	componentDidMount() {
-		GameController.setListenForPlayerCB(this.listenForPlayers);
-		GameController.setListenForPlayCB(this.listenForPlay);
+		let room = GameController.getRoom();
+		if (room) {
+			this.setState({ loading: true });
+			RoomService.getRoom(room.roomcode).then((response) => {
+				GameController.setRoom(response.room);
+				this.setState({ loading: false, room: GameController.getRoom() });
 
-		this.setState({ room: GameController.getRoom() });
+				GameController.setListenForPlayerCB(this.listenForPlayers);
+				GameController.setListenForPlayCB(this.listenForPlay);
+			});
+		} else {
+			this.setState({ toHome: true });
+		}
 	}
 
 	componentWillUnmount() {
@@ -33,17 +44,15 @@ class GameLobby extends Component {
 	}
 
 	onPlay() {
-		// tell room that game has started
-		// go to game
 		this.play(true);
 	}
 
 	listenForPlayers(obj) {
+		GameController.setRoom(obj.room);
 		this.setState({ room: obj.room });
 	}
 
 	listenForPlay(obj) {
-		//this.setState({room: obj.room});
 		this.play(false);
 	}
 
@@ -73,10 +82,14 @@ class GameLobby extends Component {
 	}
 
 	render() {
-		let { room, toGame } = this.state;
+		let { room, toGame, toHome } = this.state;
 
 		if (toGame) {
 			return <Redirect to="/Game" />;
+		}
+
+		if (toHome) {
+			return <Redirect to="/" />;
 		}
 
 		return (
@@ -97,18 +110,10 @@ class GameLobby extends Component {
 						<div className="player-list">{this.listPlayerViews()}</div>
 					</div>
 				</div>
+				<FullScreenLoader loading={this.state.loading}>Loading</FullScreenLoader>
 			</div>
 		);
 	}
 }
 
 export default GameLobby;
-
-/**
- * => Home
- *  - Generate room code => room created on server
- *  - Create websocket => socket created and added to room
- * => Game Lobby
- *  - Set up listener for players from server => whenever player is added to room, send add-player message to room with room object
- *  - whenever lobby receives add-player event, reset room
- */
