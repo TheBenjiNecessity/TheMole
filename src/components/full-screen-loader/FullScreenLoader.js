@@ -1,50 +1,35 @@
-import React, { Component } from 'react';
+import React, { useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
 
 import './full-screen-loader.scss';
 
-class FullScreenLoader extends Component {
-    element = null;
+const FullScreenLoader = ({ loading, children }) => {
+	const [ containerEl ] = useState(document.createElement('div'));
+	useEffect(
+		() => {
+			document.body.appendChild(containerEl);
+			return () => {
+				document.body.removeChild(containerEl);
+			};
+		},
+		[ containerEl ]
+	);
 
-    constructor(props) {
-        super(props);
+	let className = 'full-screen-loader';
 
-        this.state = { };
-    }
+	if (loading) {
+		className += ' loading';
+	}
 
-    componentDidMount() {
-        var full_screen_loader = document.createElement('div');
-        full_screen_loader.id = "full-screen-loader";
-        document.body.appendChild(full_screen_loader);
-
-        this.element = full_screen_loader;
-        this.componentDidUpdate();
-    }
-
-    componentWillUnmount() {
-        document.body.removeChild(this.element);
-    }
-
-    componentDidUpdate() {
-        let className = "full-screen-loader";
-
-        if (this.props.loading) {
-            className += " loading";
-        }
-
-        ReactDOM.render(
-            <div className={className}>
-                <div className="loading-element">
-                    <i className="fas fa-circle-notch"></i>
-                    {this.props.children}
-                </div>
-            </div>
-        , this.element);
-    }
-
-    render() {
-        return null;
-    }
-}
+	return ReactDOM.createPortal(
+		<div className={className}>
+			<div className="loading-element">
+				<i className="fas fa-circle-notch" />
+				{children}
+			</div>
+		</div>,
+		containerEl
+	);
+};
 
 export default FullScreenLoader;
