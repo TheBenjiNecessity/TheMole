@@ -22,7 +22,7 @@ class GameController {
 	}
 
 	setListenForPlayCB(cb) {
-		SocketService.createEvent('play', cb);
+		SocketService.createEvent('move-next', cb);
 	}
 
 	stopListenForPlayerCB() {
@@ -30,7 +30,7 @@ class GameController {
 	}
 
 	stopListenForPlayCB() {
-		SocketService.destroyEvent('play');
+		SocketService.destroyEvent('move-next');
 	}
 
 	setCurrentPlayer(player) {
