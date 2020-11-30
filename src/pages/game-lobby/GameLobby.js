@@ -8,7 +8,7 @@ import GameController from '../../controllers/game.controller';
 
 import { Redirect } from 'react-router-dom';
 import { PlayerListView } from '../../components/player-list-view';
-import { FullScreenLoader } from '../../components/full-screen-loader';
+import FullScreenLoader from '../../common/FullScreenLoader';
 
 class GameLobby extends Component {
 	constructor(props) {

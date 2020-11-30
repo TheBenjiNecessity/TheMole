@@ -11,7 +11,7 @@ import SocketService from '../../services/socket.service';
 import GameController from '../../controllers/game.controller';
 
 import HRWithTitle from '../../common/HRWithTitle';
-import { FullScreenLoader } from '../../components/full-screen-loader';
+import FullScreenLoader from '../../common/FullScreenLoader';
 
 /**
  * Summary: The first view that the user sees when opening the page.

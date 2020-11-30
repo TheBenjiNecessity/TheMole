@@ -5,7 +5,7 @@ import GameController from '../../controllers/game.controller';
 
 import './game.scss';
 import NavBar from '../../common/NavBar';
-import { FullScreenLoader } from '../../components/full-screen-loader';
+import FullScreenLoader from '../../common/FullScreenLoader';
 import { Redirect } from 'react-router-dom';
 
 class Game extends Component {
