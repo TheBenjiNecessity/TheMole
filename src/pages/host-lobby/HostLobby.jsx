@@ -4,7 +4,7 @@ import './host-lobby.scss';
 import NavBar from '../../common/NavBar';
 
 import GameController from '../../controllers/game.controller';
-import { PlayerListView } from '../../components/player-list-view';
+import PlayerListView from '../../common/PlayerListView';
 import { Redirect } from 'react-router-dom';
 
 class HostLobby extends Component {

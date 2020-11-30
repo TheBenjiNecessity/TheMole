@@ -7,7 +7,7 @@ import RoomService from '../../services/room.service';
 import GameController from '../../controllers/game.controller';
 
 import { Redirect } from 'react-router-dom';
-import { PlayerListView } from '../../components/player-list-view';
+import PlayerListView from '../../common/PlayerListView';
 import FullScreenLoader from '../../common/FullScreenLoader';
 
 class GameLobby extends Component {
