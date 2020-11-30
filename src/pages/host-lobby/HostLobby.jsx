@@ -62,7 +62,7 @@ class HostLobby extends Component {
 		let { toGame, room } = this.state;
 
 		if (toGame) {
-			return <Redirect to="/Game" />;
+			return <Redirect to="/HostGame" />;
 		}
 
 		return (
