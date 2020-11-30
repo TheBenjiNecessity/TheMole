@@ -12,7 +12,6 @@ class PlayerListView extends Component {
 	}
 
 	render() {
-		console.log('props', this.props);
 		return <div className="player-view">{this.props.name}</div>;
 	}
 }
