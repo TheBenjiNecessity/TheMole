@@ -4,7 +4,7 @@ import RoomService from '../../services/room.service';
 import GameController from '../../controllers/game.controller';
 
 import './game.scss';
-import NavBar from '../../components/navbar/component';
+import NavBar from '../../common/NavBar';
 import { FullScreenLoader } from '../../components/full-screen-loader';
 import { Redirect } from 'react-router-dom';
 

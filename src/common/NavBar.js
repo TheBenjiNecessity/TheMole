@@ -1,6 +1,6 @@
 import React from 'react';
 
-import './nav-bar.scss';
+import './NavBar.scss';
 
 const NavBar = ({ title }) => {
 	return (

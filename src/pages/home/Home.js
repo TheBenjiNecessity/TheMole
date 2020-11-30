@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 
 import './home.scss';
-import { NavBar } from '../../components/navbar';
+import NavBar from '../../common/NavBar';
 
 import RoomService from '../../services/room.service';
 import ErrorsService from '../../services/errors.service';

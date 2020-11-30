@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 import './game-lobby.scss';
-import { NavBar } from '../../components/navbar';
+import NavBar from '../../common/NavBar';
 
 import RoomService from '../../services/room.service';
 import GameController from '../../controllers/game.controller';

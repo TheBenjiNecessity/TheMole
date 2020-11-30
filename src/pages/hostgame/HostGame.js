@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 import './hostgame.scss';
-import { NavBar } from '../../components/navbar';
+import NavBar from '../../common/NavBar';
 
 class HostGame extends Component {
 	constructor(props) {

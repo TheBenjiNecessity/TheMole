@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 import './host-lobby.scss';
-import { NavBar } from '../../components/navbar';
+import NavBar from '../../common/NavBar';
 
 import GameController from '../../controllers/game.controller';
 import { PlayerListView } from '../../components/player-list-view';
