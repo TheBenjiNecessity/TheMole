@@ -16,6 +16,10 @@ export class RoomService extends ApiHelperService {
 	joinRoom(roomCode, player) {
 		return this.put(`join/${roomCode}`, { player: player });
 	}
+
+	getRoom(roomCode) {
+		return this.get(`room/${roomCode}`);
+	}
 }
 
 const shared = new RoomService();
