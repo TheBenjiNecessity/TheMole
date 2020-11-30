@@ -1,8 +1,13 @@
 export class Room {
-    roomcode = null;
-    players = [];
-    
-    constructor(roomcode) {
-        this.roomcode = roomcode;
-    }
+	roomcode = null;
+	state = 'lobby';
+	players = [];
+	episodes = [];
+
+	agreedPlayers = [];
+	raisedHands = {};
+
+	constructor(roomcode) {
+		this.roomcode = roomcode;
+	}
 }
