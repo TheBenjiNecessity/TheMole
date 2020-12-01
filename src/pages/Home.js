@@ -1,17 +1,16 @@
 import React, { useState } from 'react';
 import { Redirect } from 'react-router-dom';
 
-import './home.scss';
-import NavBar from '../../common/NavBar';
+import NavBar from '../common/NavBar';
 
-import RoomService from '../../services/room.service';
-import ErrorsService from '../../services/errors.service';
-import SocketService from '../../services/socket.service';
+import RoomService from '../services/room.service';
+import ErrorsService from '../services/errors.service';
+import SocketService from '../services/socket.service';
 
-import GameController from '../../controllers/game.controller';
+import GameController from '../controllers/game.controller';
 
-import HRWithTitle from '../../common/HRWithTitle';
-import FullScreenLoader from '../../common/FullScreenLoader';
+import HRWithTitle from '../common/HRWithTitle';
+import FullScreenLoader from '../common/FullScreenLoader';
 
 /**
  * Summary: The first view that the user sees when opening the page.

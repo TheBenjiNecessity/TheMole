@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from 'react';
 
-import './game-lobby.scss';
-import NavBar from '../../common/NavBar';
+import NavBar from '../common/NavBar';
 
-import RoomService from '../../services/room.service';
-import GameController from '../../controllers/game.controller';
+import RoomService from '../services/room.service';
+import GameController from '../controllers/game.controller';
 
 import { Redirect } from 'react-router-dom';
-import PlayerListView from '../../common/PlayerListView';
-import FullScreenLoader from '../../common/FullScreenLoader';
+import PlayerListView from '../common/PlayerListView';
+import FullScreenLoader from '../common/FullScreenLoader';
 
 const GameLobby = () => {
 	let [ room, setRoom ] = useState({});

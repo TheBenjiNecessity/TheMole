@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import { Route, Switch } from 'react-router-dom';
 
-import { Home } from './pages/home';
-import { Game } from './pages/game';
-import { GameLobby } from './pages/game-lobby';
-import { HostLobby } from './pages/host-lobby';
-import { HostGame } from './pages/hostgame';
-import { NoMatch } from './pages/nomatch';
+import Home from './pages/Home';
+import Game from './pages/Game';
+import GameLobby from './pages/GameLobby';
+import HostLobby from './pages/HostLobby';
+import HostGame from './pages/HostGame';
+import NoMatch from './pages/NoMatch';
 
 import './App.scss';
 

@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { Redirect } from 'react-router-dom';
 
-import RoomService from '../../services/room.service';
-import GameController from '../../controllers/game.controller';
-import FullScreenLoader from '../../common/FullScreenLoader';
-
-import './game.scss';
+import RoomService from '../services/room.service';
+import GameController from '../controllers/game.controller';
+import FullScreenLoader from '../common/FullScreenLoader';
 
 const Game = () => {
 	let [ room, setRoom ] = useState({});

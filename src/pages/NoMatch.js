@@ -1,5 +1,5 @@
 import React from 'react';
-import NavBar from '../../common/NavBar';
+import NavBar from '../common/NavBar';
 
 const NoMatch = () => (
 	<div className="main">

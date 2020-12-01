@@ -1,7 +1,5 @@
 import React from 'react';
-import NavBar from '../../common/NavBar';
-
-import './hostgame.scss';
+import NavBar from '../common/NavBar';
 
 const HostGame = () => {
 	//function play() {}

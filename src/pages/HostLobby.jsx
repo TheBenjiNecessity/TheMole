@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Redirect } from 'react-router-dom';
-import NavBar from '../../common/NavBar';
+import NavBar from '../common/NavBar';
 
-import GameController from '../../controllers/game.controller';
-import PlayerListView from '../../common/PlayerListView';
-
-import './host-lobby.scss';
+import GameController from '../controllers/game.controller';
+import PlayerListView from '../common/PlayerListView';
 
 const HostLobby = () => {
 	let [ room, setRoom ] = useState({});
