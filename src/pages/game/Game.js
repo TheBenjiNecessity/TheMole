@@ -1,85 +1,59 @@
-import React, { Component } from 'react';
+import React, { useEffect, useState } from 'react';
+import { Redirect } from 'react-router-dom';
 
 import RoomService from '../../services/room.service';
 import GameController from '../../controllers/game.controller';
+import FullScreenLoader from '../../common/FullScreenLoader';
 
 import './game.scss';
-import NavBar from '../../common/NavBar';
-import FullScreenLoader from '../../common/FullScreenLoader';
-import { Redirect } from 'react-router-dom';
 
-class Game extends Component {
-	constructor(props) {
-		super(props);
+const Game = () => {
+	let [ room, setRoom ] = useState({});
+	let [ loading, setLoading ] = useState(false);
+	let [ toHome, setToHome ] = useState(false);
 
-		this.play = this.play.bind(this);
-		this.onStartGame = this.onStartGame.bind(this);
-
-		this.state = { room: null, toHome: false };
-	}
-
-	componentDidMount() {
-		let room = GameController.getRoom();
-		if (room) {
-			this.setState({ loading: true });
-			RoomService.getRoom(room.roomcode).then((response) => {
-				GameController.setRoom(response.room);
-				this.setState({ loading: false, room: GameController.getRoom() });
-			});
-		} else {
-			this.setState({ toHome: true });
-		}
-	}
-
-	onStartGame() {}
-
-	play() {}
-
-	getWelcome() {
-		return (
-			<div>
-				<h1>Welcome</h1>
-				<div>This is the game room</div>
-				<button type="button" className="button button-primary" onClick={this.onStartGame}>
-					Start Game
-				</button>
-				<FullScreenLoader loading={this.state.loading}>Loading</FullScreenLoader>
-			</div>
-		);
-	}
-
-	getRoleDesignationPage() {
-		return (
-			<div>
-				<h1>Welcome</h1>
-				<div>This is the game room</div>
-			</div>
-		);
-	}
-
-	render() {
-		let { room } = this.state;
-
-		if (this.state.toHome) {
-			return <Redirect to="/" />;
-		}
-
-		if (room) {
-			if (room.state === 'game-welcome') {
-				return this.getWelcome();
-			} else if (room.state === 'episode-start') {
-				// TODO get episode and challenge
+	useEffect(
+		() => {
+			setRoom(GameController.getRoom());
+			if (room) {
+				setLoading(true);
+				RoomService.getRoom(room.roomcode).then((response) => {
+					GameController.setRoom(response.room);
+					setLoading(false);
+					setRoom(GameController.getRoom());
+					this.setState({ loading: false, room: GameController.getRoom() });
+				});
+			} else {
+				setToHome(true);
 			}
-		}
+		},
+		[ room ]
+	);
 
-		return (
-			<div className="main">
-				<NavBar title="The Mole" />
-				<div className="panel centered-panel centered-panel-medium">Game test</div>
-			</div>
-		);
+	if (toHome) {
+		return <Redirect to="/" />;
 	}
-}
+
+	if (room) {
+		if (room.state === 'game-welcome') {
+			return (
+				<div>
+					<h1>Welcome</h1>
+					<div>This is the game room</div>
+					<button type="button" className="button button-primary" onClick={this.onStartGame}>
+						Start Game
+					</button>
+					<FullScreenLoader loading={loading}>Loading</FullScreenLoader>
+				</div>
+			);
+		} else if (room.state === 'episode-start') {
+			// TODO get episode and challenge
+			return <div />;
+		}
+	} else {
+		return <Redirect to="/" />;
+	}
+};
 
 export default Game;
 

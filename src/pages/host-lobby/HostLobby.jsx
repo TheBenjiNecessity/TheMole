@@ -1,88 +1,71 @@
-import React, { Component } from 'react';
-
-import './host-lobby.scss';
+import React, { useState, useEffect } from 'react';
+import { Redirect } from 'react-router-dom';
 import NavBar from '../../common/NavBar';
 
 import GameController from '../../controllers/game.controller';
 import PlayerListView from '../../common/PlayerListView';
-import { Redirect } from 'react-router-dom';
 
-class HostLobby extends Component {
-	constructor(props) {
-		super(props);
+import './host-lobby.scss';
 
-		this.listenForPlayers = this.listenForPlayers.bind(this);
-		this.listenForPlay = this.listenForPlay.bind(this);
-		this.play = this.play.bind(this);
+const HostLobby = () => {
+	let [ room, setRoom ] = useState({});
+	let [ toGame, setToGame ] = useState(false);
 
-		this.state = { room: null, toGame: false };
-	}
+	useEffect(() => {
+		GameController.setListenForPlayerCB(listenForPlayers);
+		GameController.setListenForPlayCB(listenForPlay);
 
-	componentDidMount() {
-		GameController.setListenForPlayerCB(this.listenForPlayers);
-		GameController.setListenForPlayCB(this.listenForPlay);
+		setRoom(GameController.getRoom());
 
-		this.setState({ room: GameController.getRoom() });
-	}
-
-	componentWillUnmount() {
-		GameController.stopListenForPlayerCB();
-		GameController.stopListenForPlayCB();
-	}
-
-	listenForPlayers(obj) {
-		this.setState({ room: obj.room });
-	}
-
-	listenForPlay(obj) {
-		this.play();
-	}
-
-	play() {
-		this.setState({ toGame: true });
-	}
-
-	getPlayerView(player, key) {
-		return (
-			<div key={key}>
-				<PlayerListView name={player.name} />
-			</div>
-		);
-	}
-
-	listPlayerViews() {
-		if (this.state.room && this.state.room.players && this.state.room.players.length) {
-			return this.state.room.players.map((p, i) => this.getPlayerView(p, i));
-		} else {
-			return <div />;
-		}
-	}
-
-	render() {
-		let { toGame, room } = this.state;
-
-		if (toGame) {
-			return <Redirect to="/HostGame" />;
+		function listenForPlayers(obj) {
+			setRoom(obj.room);
 		}
 
-		return (
-			<div className="main">
-				<NavBar title="The Mole" />
-				<div className="panel centered-panel centered-panel-medium">
-					<div className="titla-message col-sm-12">Press "Start Game" to start the game</div>
-					<hr />
-					<div className="form-group pl-xs-0 pr-xs-0 mt-0 col-sm-6">
-						<label>Room Code:</label>
-						<div className="room-code">{room ? room.roomcode : 'No Code'}</div>
-					</div>
-					<div className="form-group pl-xs-0 pr-xs-0 mt-0 col-sm-6">
-						<label>Players:</label>
-						<div className="player-list">{this.listPlayerViews()}</div>
+		function listenForPlay(obj) {
+			play();
+		}
+
+		return () => {
+			GameController.stopListenForPlayerCB();
+			GameController.stopListenForPlayCB();
+		};
+	}, []);
+
+	function play() {
+		setToGame(true);
+	}
+
+	if (toGame) {
+		return <Redirect to="/HostGame" />;
+	}
+
+	return (
+		<div className="main">
+			<NavBar title="The Mole" />
+			<div className="panel centered-panel centered-panel-medium">
+				<div className="titla-message col-sm-12">Press "Start Game" to start the game</div>
+				<hr />
+				<div className="form-group pl-xs-0 pr-xs-0 mt-0 col-sm-6">
+					<label>Room Code:</label>
+					<div className="room-code">{room ? room.roomcode : 'No Code'}</div>
+				</div>
+				<div className="form-group pl-xs-0 pr-xs-0 mt-0 col-sm-6">
+					<label>Players:</label>
+					<div className="player-list">
+						{room && room.players && room.players.length ? (
+							room.players.map((p, i) => (
+								<div key={i}>
+									<PlayerListView name={p.name} />
+								</div>
+							))
+						) : (
+							<div />
+						)}
 					</div>
 				</div>
 			</div>
-		);
-	}
-}
+		</div>
+	);
+};
 
 export default HostLobby;

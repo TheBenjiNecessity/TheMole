@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import './game-lobby.scss';
 import NavBar from '../../common/NavBar';
@@ -10,110 +10,99 @@ import { Redirect } from 'react-router-dom';
 import PlayerListView from '../../common/PlayerListView';
 import FullScreenLoader from '../../common/FullScreenLoader';
 
-class GameLobby extends Component {
-	constructor(props) {
-		super(props);
+const GameLobby = () => {
+	let [ room, setRoom ] = useState({});
+	let [ loading, setLoading ] = useState(false);
+	let [ toGame, setToGame ] = useState(false);
+	let [ toHome, setToHome ] = useState(false);
 
-		this.onPlay = this.onPlay.bind(this);
-		this.listenForPlayers = this.listenForPlayers.bind(this);
-		this.listenForPlay = this.listenForPlay.bind(this);
-		this.play = this.play.bind(this);
+	useEffect(
+		() => {
+			setRoom(GameController.getRoom());
 
-		this.state = { room: null, toGame: false, toHome: false };
+			if (room) {
+				setLoading(true);
+				RoomService.getRoom(room.roomcode).then((response) => {
+					GameController.setRoom(response.room);
+					setLoading(false);
+					setRoom(GameController.getRoom());
+
+					GameController.setListenForPlayerCB(listenForPlayers);
+					GameController.setListenForPlayCB(listenForPlay);
+				});
+			} else {
+				setToHome(true);
+			}
+
+			return () => {
+				GameController.stopListenForPlayerCB();
+				GameController.stopListenForPlayCB();
+			};
+
+			function listenForPlayers(obj) {
+				GameController.setRoom(obj.room);
+				setRoom(obj.room);
+			}
+
+			function listenForPlay(obj) {
+				play(false);
+			}
+		},
+		[ room ]
+	);
+
+	function onPlay() {
+		play(true);
 	}
 
-	componentDidMount() {
-		let room = GameController.getRoom();
-		if (room) {
-			this.setState({ loading: true });
-			RoomService.getRoom(room.roomcode).then((response) => {
-				GameController.setRoom(response.room);
-				this.setState({ loading: false, room: GameController.getRoom() });
-
-				GameController.setListenForPlayerCB(this.listenForPlayers);
-				GameController.setListenForPlayCB(this.listenForPlay);
-			});
-		} else {
-			this.setState({ toHome: true });
-		}
-	}
-
-	componentWillUnmount() {
-		GameController.stopListenForPlayerCB();
-		GameController.stopListenForPlayCB();
-	}
-
-	onPlay() {
-		this.play(true);
-	}
-
-	listenForPlayers(obj) {
-		GameController.setRoom(obj.room);
-		this.setState({ room: obj.room });
-	}
-
-	listenForPlay(obj) {
-		this.play(false);
-	}
-
-	play(local) {
+	function play(local) {
 		if (local) {
 			//send socket message to others
 			GameController.startPlay();
 		}
 
-		this.setState({ toGame: true });
+		setToGame(true);
 	}
 
-	getPlayerView(player, key) {
-		return (
-			<div key={key}>
-				<PlayerListView name={player.name} />
-			</div>
-		);
+	if (toGame) {
+		return <Redirect to="/Game" />;
 	}
 
-	listPlayerViews() {
-		if (this.state.room && this.state.room.players && this.state.room.players.length) {
-			return this.state.room.players.map((p, i) => this.getPlayerView(p, i));
-		} else {
-			return <div />;
-		}
+	if (toHome) {
+		return <Redirect to="/" />;
 	}
 
-	render() {
-		let { room, toGame, toHome } = this.state;
-
-		if (toGame) {
-			return <Redirect to="/Game" />;
-		}
-
-		if (toHome) {
-			return <Redirect to="/" />;
-		}
-
-		return (
-			<div className="main">
-				<NavBar title="The Mole" />
-				<div className="panel centered-panel centered-panel-medium">
-					<div className="start-button-bar col-sm-12">
-						<button type="button" className="button button-primary" onClick={this.onPlay}>
-							Start Game
-						</button>
-					</div>
-					<div className="form-group pl-xs-0 pr-xs-0 mt-0 col-sm-6">
-						<label>Room Code:</label>
-						<div className="room-code">{room ? room.roomcode : 'No Code'}</div>
-					</div>
-					<div className="form-group pl-xs-0 pr-xs-0 mt-0 col-sm-6">
-						<label>Players:</label>
-						<div className="player-list">{this.listPlayerViews()}</div>
+	return (
+		<div className="main">
+			<NavBar title="The Mole" />
+			<div className="panel centered-panel centered-panel-medium">
+				<div className="start-button-bar col-sm-12">
+					<button type="button" className="button button-primary" onClick={onPlay}>
+						Start Game
+					</button>
+				</div>
+				<div className="form-group pl-xs-0 pr-xs-0 mt-0 col-sm-6">
+					<label>Room Code:</label>
+					<div className="room-code">{room ? room.roomcode : 'No Code'}</div>
+				</div>
+				<div className="form-group pl-xs-0 pr-xs-0 mt-0 col-sm-6">
+					<label>Players:</label>
+					<div className="player-list">
+						{room && room.players && room.players.length ? (
+							room.players.map((p, i) => (
+								<div key={i}>
+									<PlayerListView name={p.name} />
+								</div>
+							))
+						) : (
+							<div />
+						)}
 					</div>
 				</div>
-				<FullScreenLoader loading={this.state.loading}>Loading</FullScreenLoader>
 			</div>
-		);
-	}
-}
+			<FullScreenLoader loading={loading}>Loading</FullScreenLoader>
+		</div>
+	);
+};
 
 export default GameLobby;

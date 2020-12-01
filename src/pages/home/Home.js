@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import { Redirect } from 'react-router-dom';
 
 import './home.scss';
@@ -22,20 +22,14 @@ import FullScreenLoader from '../../common/FullScreenLoader';
  * a room for other players to join or for the player to join another room
  * already created.
  */
-class Home extends Component {
-	constructor(props) {
-		super(props);
+const Home = () => {
+	let [ name, setName ] = useState('');
+	let [ roomcode, setRoomcode ] = useState('');
+	let [ loading, setLoading ] = useState(false);
+	let [ toHostLobby, setToHostLobby ] = useState(false);
+	let [ toGameLobby, setToGameLobby ] = useState(false);
 
-		this.onPlay = this.onPlay.bind(this);
-		this.onHost = this.onHost.bind(this);
-		this.onChange = this.onChange.bind(this);
-
-		this.state = { name: '', roomcode: '', toGame: false, loading: false, toHostLobby: false };
-	}
-
-	// a listener for when the user clicks on the play button
-	onPlay() {
-		let { name, roomcode } = this.state;
+	function onPlay() {
 		let errorMessages = 'Errors:\n';
 		if (!name || name === '') {
 			errorMessages += 'You must enter a name.\n';
@@ -55,7 +49,9 @@ class Home extends Component {
 					GameController.setCurrentPlayer(response.player);
 					GameController.setRoom(response.room);
 					GameController.setWSUrl(response.web_socket_url);
-					this.setState({ toGameLobby: true, toHostLobby: false });
+
+					setToGameLobby(true);
+					setToHostLobby(false);
 				})
 				.catch((error) => {
 					if (error.errors) {
@@ -69,67 +65,68 @@ class Home extends Component {
 		}
 	}
 
-	onHost() {
-		this.setState({ loading: true });
+	function onHost() {
+		setLoading(true);
 		RoomService.createRoom().then((response) => {
 			SocketService.createService(response.web_socket_url, response.room);
 			GameController.setRoom(response.room);
 			GameController.setWSUrl(response.web_socket_url);
 			GameController.isHost = true;
-			this.setState({ loading: false, roomcode: response.room.roomcode, toHostLobby: true, toGameLobby: false });
+
+			setLoading(false);
+			setRoomcode(response.room.roomcode);
+			setToHostLobby(true);
+			setToGameLobby(false);
 		});
 	}
 
-	onChange(event) {
-		const name = event.target.name;
-		const value = event.target.type === 'checkbox' ? event.target.checked : event.target.value;
-		this.setState({ [name]: value });
+	function onPlayerNameChange(event) {
+		setName(event.target.value);
 	}
 
-	render() {
-		let { roomcode, toHostLobby, toGameLobby } = this.state;
-		if (toHostLobby && !(!roomcode || roomcode === '')) {
-			let url = `/HostLobby?room=${roomcode}`;
-			return <Redirect to={url} />;
-		}
+	function onRoomCodeChange(event) {
+		setRoomcode(event.target.value);
+	}
 
-		if (toGameLobby && !(!roomcode || roomcode === '')) {
-			let url = `/GameLobby?room=${roomcode}`;
-			return <Redirect to={url} />;
-		}
+	if (toHostLobby && !(!roomcode || roomcode === '')) {
+		return <Redirect to={`/HostLobby?room=${roomcode}`} />;
+	}
 
-		return (
-			<div className="main">
-				<NavBar title="The Mole" />
-				<div className="panel centered-panel centered-panel-medium">
-					<form>
-						<div className="form-group pl-xs-0 pr-xs-0 mt-0">
-							<label htmlFor="name">Player Name:</label>
-							<input type="text" className="form-control" name="name" onChange={this.onChange} />
-						</div>
-						<div className="form-group pl-xs-0 pr-xs-0">
-							<label htmlFor="roomcode">Room Code:</label>
-							<input type="text" className="form-control" name="roomcode" onChange={this.onChange} />
-						</div>
-						<div className="form-group pl-xs-0 pr-xs-0 mt-xs-0">
-							<button type="button" className="button button-primary" onClick={this.onPlay}>
-								Play
-							</button>
-						</div>
-						<div className="form-group pl-xs-0 pr-xs-0 mt-xs-0">
-							<HRWithTitle>Or</HRWithTitle>
-						</div>
-						<div className="form-group pl-xs-0 pr-xs-0 mt-xs-0">
-							<button type="button" className="button button-primary" onClick={this.onHost}>
-								Host Room
-							</button>
-						</div>
-					</form>
-				</div>
-				<FullScreenLoader loading={this.state.loading}>Loading</FullScreenLoader>
+	if (toGameLobby && !(!roomcode || roomcode === '')) {
+		return <Redirect to={`/GameLobby?room=${roomcode}`} />;
+	}
+
+	return (
+		<div className="main">
+			<NavBar title="The Mole" />
+			<div className="panel centered-panel centered-panel-medium">
+				<form>
+					<div className="form-group pl-xs-0 pr-xs-0 mt-0">
+						<label htmlFor="name">Player Name:</label>
+						<input type="text" className="form-control" name="name" onChange={onPlayerNameChange} />
+					</div>
+					<div className="form-group pl-xs-0 pr-xs-0">
+						<label htmlFor="roomcode">Room Code:</label>
+						<input type="text" className="form-control" name="roomcode" onChange={onRoomCodeChange} />
+					</div>
+					<div className="form-group pl-xs-0 pr-xs-0 mt-xs-0">
+						<button type="button" className="button button-primary" onClick={onPlay}>
+							Play
+						</button>
+					</div>
+					<div className="form-group pl-xs-0 pr-xs-0 mt-xs-0">
+						<HRWithTitle>Or</HRWithTitle>
+					</div>
+					<div className="form-group pl-xs-0 pr-xs-0 mt-xs-0">
+						<button type="button" className="button button-primary" onClick={onHost}>
+							Host Room
+						</button>
+					</div>
+				</form>
 			</div>
-		);
-	}
-}
+			<FullScreenLoader loading={loading}>Loading</FullScreenLoader>
+		</div>
+	);
+};
 
 export default Home;

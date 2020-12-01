@@ -1,28 +1,18 @@
-import React, { Component } from 'react';
-
-import './hostgame.scss';
+import React from 'react';
 import NavBar from '../../common/NavBar';
 
-class HostGame extends Component {
-	constructor(props) {
-		super(props);
+import './hostgame.scss';
 
-		this.play = this.play.bind(this);
+const HostGame = () => {
+	//function play() {}
 
-		this.state = { name: '', roomcode: '' };
-	}
-
-	play() {}
-
-	render() {
-		return (
-			<div className="main">
-				<NavBar title="The Mole" />
-				<div className="panel centered-panel centered-panel-medium">Host room</div>
-			</div>
-		);
-	}
-}
+	return (
+		<div className="main">
+			<NavBar title="The Mole" />
+			<div className="panel centered-panel centered-panel-medium">Host room</div>
+		</div>
+	);
+};
 
 export default HostGame;
 
