@@ -1,4 +1,5 @@
 import apiHelperService from './api-helper.service';
+import storageService from './storage.service';
 
 const roomService = {
 	createRoom: () => {
