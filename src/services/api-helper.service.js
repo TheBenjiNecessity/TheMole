@@ -2,26 +2,24 @@ import axios from 'axios';
 
 import { config } from '../constants/environment.constants';
 
-export class ApiHelperService {
-	serviceUrl = config.url.API_URL;
+const apiHelperService = {
+	get: (url) => {
+		return this.request(`${config.url.API_URL}/${url}`, 'GET');
+	},
 
-	get(url) {
-		return this.request(`${this.serviceUrl}/${url}`, 'GET');
-	}
+	post: (url, body, header = 'application/json') => {
+		return this.request(`${config.url.API_URL}/${url}`, 'POST', body, header);
+	},
 
-	post(url, body, header = 'application/json') {
-		return this.request(`${this.serviceUrl}/${url}`, 'POST', body, header);
-	}
+	put: (url, body) => {
+		return this.request(`${config.url.API_URL}/${url}`, 'PUT', body);
+	},
 
-	put(url, body) {
-		return this.request(`${this.serviceUrl}/${url}`, 'PUT', body);
-	}
+	del: (url) => {
+		return this.request(`${config.url.API_URL}/${url}`, 'DELETE');
+	},
 
-	del(url) {
-		return this.request(`${this.serviceUrl}/${url}`, 'DELETE');
-	}
-
-	request(url, method, body = null, header = 'application/json') {
+	request: (url, method, body = null, header = 'application/json') => {
 		let headers = {
 			'Content-Type': header
 		};
@@ -34,4 +32,6 @@ export class ApiHelperService {
 
 		return axios(config).then((response) => response.data);
 	}
-}
+};
+
+export default apiHelperService;

@@ -1,27 +1,28 @@
-import { ApiHelperService } from './api-helper.service';
+import apiHelperService from './api-helper.service';
 
-export class RoomService extends ApiHelperService {
-	constructor() {
-		super();
-		if (!RoomService.shared) {
-			RoomService.shared = this;
-		}
-		return RoomService.shared;
+const roomService = {
+	createRoom: () => {
+		return apiHelperService.post('room').then(({ room }) => {
+			storageService.clearValues();
+			storageService.setRoom(room);
+			storageService.setIsHost(true);
+
+			return room.roomcode;
+		});
+	},
+
+	joinRoom: (roomCode, player) => {
+		return apiHelperService.put(`room/${roomCode}/join`, { player: player }).then(({ room, player }) => {
+			storageService.clearValues();
+			storageService.setPlayer(player);
+			storageService.setRoom(room);
+			storageService.setIsHost(false);
+		});
+	},
+
+	getRoom: (roomCode) => {
+		return apiHelperService.get(`room/${roomCode}`);
 	}
+};
 
-	createRoom() {
-		return this.post('create');
-	}
-
-	joinRoom(roomCode, player) {
-		return this.put(`join/${roomCode}`, { player: player });
-	}
-
-	getRoom(roomCode) {
-		return this.get(`room/${roomCode}`);
-	}
-}
-
-const shared = new RoomService();
-
-export default shared;
+export default roomService;
