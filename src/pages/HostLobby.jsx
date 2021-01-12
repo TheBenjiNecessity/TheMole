@@ -5,6 +5,10 @@ import NavBar from '../common/NavBar';
 import GameController from '../controllers/game.controller';
 import PlayerListView from '../common/PlayerListView';
 
+/**
+ * A page where players go when they create a game.
+ * Lists players waiting in the game's lobby.
+ */
 const HostLobby = () => {
 	let [ room, setRoom ] = useState({});
 	let [ toGame, setToGame ] = useState(false);

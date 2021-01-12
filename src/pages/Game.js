@@ -1,102 +1,49 @@
 import React, { useEffect, useState } from 'react';
-import { Redirect } from 'react-router-dom';
 
-import RoomService from '../services/room.service';
-import GameController from '../controllers/game.controller';
+import roomService from '../services/room.service';
 import FullScreenLoader from '../common/FullScreenLoader';
 
-const Game = () => {
-	let [ room, setRoom ] = useState({});
+import socketService from '../services/socket.service';
+import GameView from '../components/GameView';
+import storageService from '../services/storage.service';
+
+const Game = ({ isHost }) => {
 	let [ loading, setLoading ] = useState(false);
-	let [ toHome, setToHome ] = useState(false);
 
-	useEffect(
-		() => {
-			setRoom(GameController.getRoom());
-			if (room) {
-				setLoading(true);
-				RoomService.getRoom(room.roomcode).then((response) => {
-					GameController.setRoom(response.room);
-					setLoading(false);
-					setRoom(GameController.getRoom());
-					this.setState({ loading: false, room: GameController.getRoom() });
-				});
-			} else {
-				setToHome(true);
-			}
-		},
-		[ room ]
-	);
+	useEffect(() => {
+		socketService.createEvent('room-event', (room) => {
+			storageService.setRoom(room);
+		});
+	}, []);
 
-	if (toHome) {
-		return <Redirect to="/" />;
-	}
+	useEffect(() => {
+		const oldRoom = storageService.getRoom();
+		if (oldRoom) {
+			setLoading(true);
+			roomService.getRoom(oldRoom.roomcode).then(({ room }) => {
+				setLoading(false);
 
-	if (room) {
-		if (room.state === 'game-welcome') {
-			return (
-				<div>
-					<h1>Welcome</h1>
-					<div>This is the game room</div>
-					<button type="button" className="button button-primary" onClick={this.onStartGame}>
-						Start Game
-					</button>
-					<FullScreenLoader loading={loading}>Loading</FullScreenLoader>
-				</div>
-			);
-		} else if (room.state === 'episode-start') {
-			// TODO get episode and challenge
-			return <div />;
+				storageService.setRoom(room);
+
+				const player = storageService.getPlayer();
+				if (player) {
+					roomService.joinRoom(room.roomcode, storageService.getPlayer());
+				}
+			});
 		}
+	}, []);
+
+	const room = storageService.getRoom();
+	if (room) {
+		return (
+			<span>
+				<GameView room={room} isHost={isHost} />
+				<FullScreenLoader loading={loading}>Loading</FullScreenLoader>
+			</span>
+		);
 	} else {
-		return <Redirect to="/" />;
+		return <span />;
 	}
 };
 
 export default Game;
-
-/**
- * Presentation
- *      - Start of game
- *          - intro to game
- *      - Episode
- *          - intro to episode
- *          - Challenge
- *              - Ask for players to assign roles
- *              - Tell players what the game is about
- *              - start the game
- *              - game ends
- *              - tell players whether or not they were successful
- *              - tell players pot standing
- *          - ...
- *          - Challenge
- *          - Tell players pot standing
- *          - Quiz
- *              - Quiz intro
- *              - Present Quiz
- *                  - Start button
- *                  - Question
- *                      - Display question text and choices
- *                      - on choice button click, go to next question
- *                  - ...
- *                  - Question
- *                  - Finish button
- *          - Episode lobby
- *              - wait for other players to finish
- *          - Quiz results
- *              - results intro
- *              - show results for player
- *              - ...
- *              - show results for player
- *              - show eliminated player
- *              - go to Episode lobby
- *          - Episode lobby
- *              - start new episode
- *      - Last Episode (only final player and mole)
- *          - intro to episode
- *          - Final Challenge
- *          - Show results
- *              - end game button (go back to game lobby with same room)
- *      - Game Lobby
- *          - start button (with 'play again' text)
- */

@@ -9,6 +9,11 @@ import { Redirect } from 'react-router-dom';
 import PlayerListView from '../common/PlayerListView';
 import FullScreenLoader from '../common/FullScreenLoader';
 
+/**
+ * A page where players go when they decide to join a game.
+ * Lists players waiting in the game's lobby and shows a button
+ * at the bottom to start the game.
+ */
 const GameLobby = () => {
 	let [ room, setRoom ] = useState({});
 	let [ loading, setLoading ] = useState(false);
