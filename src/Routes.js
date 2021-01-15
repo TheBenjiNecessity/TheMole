@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Route, Switch } from 'react-router-dom';
+import './locales/i18n';
 
 import Home from './pages/Home';
 import Game from './pages/Game';
