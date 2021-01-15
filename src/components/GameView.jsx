@@ -10,11 +10,17 @@ import ExecutionView from './ExecutionView';
 import ExecutionWrapupView from './ExecutionWrapupView';
 import Room from '../models/room.model';
 import LobbyView from './LobbyView';
+import socketService from '../services/socket.service';
+import storageService from '../services/storage.service';
 
 const GameView = ({ room, isHost }) => {
-	switch (room.state) {
+	function onNext(event) {
+		socketService.sendMessageToRoom(room.roomcode, 'move-next', storageService.getPlayer().name);
+	}
+
+	switch (room._state) {
 		case Room.ROOM_STATES.LOBBY:
-			return <LobbyView isHost={isHost} />;
+			return <LobbyView room={room} isHost={isHost} onNext={onNext} />;
 		case Room.ROOM_STATES.WELCOME:
 			return <WelcomeView />;
 		case Room.ROOM_STATES.EPISODE_START:
@@ -33,6 +39,8 @@ const GameView = ({ room, isHost }) => {
 			return <ExecutionView />;
 		case Room.ROOM_STATES.EXECUTION_WRAPUP:
 			return <ExecutionWrapupView />;
+		default:
+			return null;
 	}
 };
 

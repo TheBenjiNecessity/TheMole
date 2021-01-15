@@ -1,9 +1,7 @@
 import React from 'react';
 import PlayerListView from '../common/PlayerListView';
 
-const LobbyView = ({ room, titleMessage, isHost }) => {
-	function onStartClick(event) {}
-
+const LobbyView = ({ room, titleMessage, isHost, onNext }) => {
 	return (
 		<div className="panel centered-panel centered-panel-medium">
 			<div className="title-message col-sm-12">{titleMessage}</div>
@@ -26,7 +24,9 @@ const LobbyView = ({ room, titleMessage, isHost }) => {
 				<React.Fragment>
 					<hr />
 					<div>
-						<button onClick={onStartClick}>Start</button>
+						<button type="button" className="button button-primary" onClick={onNext}>
+							Start
+						</button>
 					</div>
 				</React.Fragment>
 			)}
