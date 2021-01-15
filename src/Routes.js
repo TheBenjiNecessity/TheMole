@@ -4,8 +4,7 @@ import './locales/i18n';
 
 import Home from './pages/Home';
 import Game from './pages/Game';
-import GameLobby from './pages/GameLobby';
-import HostLobby from './pages/HostLobby';
+import Test from './pages/Test';
 import HostGame from './pages/HostGame';
 import NoMatch from './pages/NoMatch';
 
@@ -16,9 +15,8 @@ export class Routes extends Component {
 		return (
 			<Switch>
 				<Route path="/HostGame" component={HostGame} />
-				<Route path="/GameLobby" component={GameLobby} />
-				<Route path="/HostLobby" component={HostLobby} />
 				<Route path="/Game" component={Game} />
+				<Route path="/Test" component={Test} />
 				<Route exact path="/" component={Home} />
 				<Route component={NoMatch} />
 			</Switch>
