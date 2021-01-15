@@ -1,12 +1,14 @@
 import apiHelperService from './api-helper.service';
+import socketService from './socket.service';
 import storageService from './storage.service';
 
 const roomService = {
 	createRoom: () => {
 		return apiHelperService.post('room').then(({ room }) => {
+			socketService.joinRoom(room.roomcode);
+
 			storageService.clearValues();
 			storageService.setRoom(room);
-			storageService.setIsHost(true);
 
 			return room.roomcode;
 		});
@@ -14,10 +16,11 @@ const roomService = {
 
 	joinRoom: (roomCode, player) => {
 		return apiHelperService.put(`room/${roomCode}/join`, { player: player }).then(({ room, player }) => {
+			socketService.joinRoom(room.roomcode);
+
 			storageService.clearValues();
 			storageService.setPlayer(player);
 			storageService.setRoom(room);
-			storageService.setIsHost(false);
 		});
 	},
 
