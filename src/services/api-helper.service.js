@@ -3,23 +3,23 @@ import axios from 'axios';
 import { config } from '../constants/environment.constants';
 
 const apiHelperService = {
-	get: (url) => {
+	get: function(url) {
 		return this.request(`${config.url.API_URL}/${url}`, 'GET');
 	},
 
-	post: (url, body, header = 'application/json') => {
+	post: function(url, body, header = 'application/json') {
 		return this.request(`${config.url.API_URL}/${url}`, 'POST', body, header);
 	},
 
-	put: (url, body) => {
+	put: function(url, body) {
 		return this.request(`${config.url.API_URL}/${url}`, 'PUT', body);
 	},
 
-	del: (url) => {
+	del: function(url) {
 		return this.request(`${config.url.API_URL}/${url}`, 'DELETE');
 	},
 
-	request: (url, method, body = null, header = 'application/json') => {
+	request: function(url, method, body = null, header = 'application/json') {
 		let headers = {
 			'Content-Type': header
 		};
