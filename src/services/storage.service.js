@@ -1,36 +1,28 @@
 const K_MOLE_ROOM_STORAGE = 'k-mole-room';
 const K_MOLE_PLAYER_STORAGE = 'k-mole-player';
-const K_MOLE_IS_HOST_STORAGE = 'k-mole-is-host';
 
 const storageService = {
 	getPlayer: () => {
-		return JSON.parse(window.localStorage.getItem(K_MOLE_PLAYER_STORAGE));
+		const playerString = window.sessionStorage.getItem(K_MOLE_PLAYER_STORAGE);
+		return typeof playerString === 'string' ? JSON.parse(playerString) : null;
 	},
 
 	setPlayer: (player) => {
-		window.localStorage.setItem(K_MOLE_PLAYER_STORAGE, JSON.stringify(player));
+		window.sessionStorage.setItem(K_MOLE_PLAYER_STORAGE, JSON.stringify(player));
 	},
 
 	getRoom: () => {
-		return JSON.parse(window.localStorage.getItem(K_MOLE_ROOM_STORAGE));
+		const roomString = window.sessionStorage.getItem(K_MOLE_ROOM_STORAGE);
+		return typeof roomString === 'string' ? JSON.parse(roomString) : null;
 	},
 
 	setRoom: (room) => {
-		window.localStorage.setItem(K_MOLE_ROOM_STORAGE, JSON.stringify(room));
-	},
-
-	getIsHost: () => {
-		return JSON.parse(window.localStorage.getItem(K_MOLE_IS_HOST_STORAGE));
-	},
-
-	setIsHost: (isHost) => {
-		window.localStorage.setItem(K_MOLE_IS_HOST_STORAGE, JSON.stringify(isHost));
+		window.sessionStorage.setItem(K_MOLE_ROOM_STORAGE, JSON.stringify(room));
 	},
 
 	clearValues: () => {
-		window.localStorage.removeItem(K_MOLE_PLAYER_STORAGE);
-		window.localStorage.removeItem(K_MOLE_PLAYER_STORAGE);
-		window.localStorage.removeItem(K_MOLE_IS_HOST_STORAGE);
+		window.sessionStorage.removeItem(K_MOLE_PLAYER_STORAGE);
+		window.sessionStorage.removeItem(K_MOLE_ROOM_STORAGE);
 	}
 };
 
