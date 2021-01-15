@@ -20,6 +20,11 @@ const storageService = {
 		window.sessionStorage.setItem(K_MOLE_ROOM_STORAGE, JSON.stringify(room));
 	},
 
+	isHost: () => {
+		const playerString = window.sessionStorage.getItem(K_MOLE_PLAYER_STORAGE);
+		return !playerString || typeof playerString === 'undefined';
+	},
+
 	clearValues: () => {
 		window.sessionStorage.removeItem(K_MOLE_PLAYER_STORAGE);
 		window.sessionStorage.removeItem(K_MOLE_ROOM_STORAGE);
