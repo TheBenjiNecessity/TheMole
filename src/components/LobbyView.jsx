@@ -13,8 +13,8 @@ const LobbyView = ({ room, titleMessage, isHost, onNext }) => {
 			<div className="form-group pl-xs-0 pr-xs-0 mt-0 col-sm-6">
 				<label>Players:</label>
 				<div className="player-list">
-					{room && room.players && room.players.length ? (
-						room.players.map((player) => <PlayerListView key={player.name} player={player} />)
+					{room && room._players && room._players.length ? (
+						room._players.map((player) => <PlayerListView key={player.name} player={player} />)
 					) : (
 						<div />
 					)}
