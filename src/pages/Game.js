@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import roomService from '../services/room.service';
 import FullScreenLoader from '../common/FullScreenLoader';
