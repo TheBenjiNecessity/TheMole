@@ -1,11 +1,12 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
+import NextPanel from '../common/NextPanel';
+
 import PlayerListView from '../common/PlayerListView';
 
-const LobbyView = ({ room, titleMessage, isHost, onNext }) => {
+const LobbyView = ({ room, onNext }) => {
 	return (
-		<div className="panel centered-panel centered-panel-medium">
-			<div className="title-message col-sm-12">{titleMessage}</div>
-			<hr />
+		<NextPanel titleText="Lobby" nextButtonText="Start" onNext={onNext}>
 			<div className="form-group pl-xs-0 pr-xs-0 mt-0 col-sm-6">
 				<label>Room Code:</label>
 				<div className="room-code">{room ? room.roomcode : 'No Code'}</div>
@@ -20,17 +21,7 @@ const LobbyView = ({ room, titleMessage, isHost, onNext }) => {
 					)}
 				</div>
 			</div>
-			{!isHost && (
-				<React.Fragment>
-					<hr />
-					<div>
-						<button type="button" className="button button-primary" onClick={onNext}>
-							Start
-						</button>
-					</div>
-				</React.Fragment>
-			)}
-		</div>
+		</NextPanel>
 	);
 };
 
