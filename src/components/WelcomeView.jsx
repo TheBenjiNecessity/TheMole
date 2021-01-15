@@ -5,7 +5,7 @@ const WelcomeView = ({ room, onNextClick }) => {
 		<div>
 			<h1>Welcome</h1>
 			<div>This is the game room</div>
-			<button type="button" className="button button-primary" onClick={this.onNextClick}>
+			<button type="button" className="button button-primary" onClick={onNextClick}>
 				Start Game
 			</button>
 		</div>
