@@ -11,7 +11,7 @@ const Game = () => {
 	const [ room, setRoom ] = useState(storageService.getRoom());
 	const [ loading, setLoading ] = useState(false);
 
-	const player = useMemo(() => storageService.getPlayer(), [ player ]);
+	const player = storageService.getPlayer();
 
 	useEffect(() => {
 		socketService.createEvent('room-event', (room) => {
