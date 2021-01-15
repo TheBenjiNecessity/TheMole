@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 
 import roomService from '../services/room.service';
 import FullScreenLoader from '../common/FullScreenLoader';
@@ -7,42 +7,54 @@ import socketService from '../services/socket.service';
 import GameView from '../components/GameView';
 import storageService from '../services/storage.service';
 
-const Game = ({ isHost }) => {
-	let [ loading, setLoading ] = useState(false);
+const Game = () => {
+	const [ room, setRoom ] = useState(storageService.getRoom());
+	const [ loading, setLoading ] = useState(false);
+
+	const player = useMemo(() => storageService.getPlayer(), [ player ]);
 
 	useEffect(() => {
 		socketService.createEvent('room-event', (room) => {
-			storageService.setRoom(room);
+			__setRoom(room);
 		});
+
+		return () => {
+			socketService.removeEvent('room-event');
+		};
 	}, []);
 
+	// On mount, check to see if a room already exists in storage. If it does,
+	// then look for that same room on the server and get the most up to date
+	// version.
 	useEffect(() => {
-		const oldRoom = storageService.getRoom();
-		if (oldRoom) {
+		if (room) {
 			setLoading(true);
-			roomService.getRoom(oldRoom.roomcode).then(({ room }) => {
+			roomService.getRoom(room.roomcode).then(({ room: newRoom }) => {
 				setLoading(false);
 
-				storageService.setRoom(room);
+				__setRoom(newRoom);
 
-				const player = storageService.getPlayer();
 				if (player) {
-					roomService.joinRoom(room.roomcode, storageService.getPlayer());
+					roomService.joinRoom(newRoom.roomcode, player);
 				}
 			});
 		}
 	}, []);
 
-	const room = storageService.getRoom();
+	function __setRoom(room) {
+		storageService.setRoom(room);
+		setRoom(room);
+	}
+
 	if (room) {
 		return (
-			<span>
-				<GameView room={room} isHost={isHost} />
+			<React.Fragment>
+				<GameView room={room} player={player} />
 				<FullScreenLoader loading={loading}>Loading</FullScreenLoader>
-			</span>
+			</React.Fragment>
 		);
 	} else {
-		return <span />;
+		return null;
 	}
 };
 

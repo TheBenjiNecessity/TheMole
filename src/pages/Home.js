@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Redirect } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 import NavBar from '../common/NavBar';
 
@@ -8,6 +9,7 @@ import errorsService from '../services/errors.service';
 
 import HRWithTitle from '../common/HRWithTitle';
 import FullScreenLoader from '../common/FullScreenLoader';
+import storageService from '../services/storage.service';
 
 /**
  * Summary: The first view that the user sees when opening the page.
@@ -23,7 +25,14 @@ const Home = () => {
 	let [ loading, setLoading ] = useState(false);
 	let [ toGame, setToGame ] = useState(false);
 
+	const { t } = useTranslation('common');
+
+	useEffect(() => {
+		storageService.clearValues();
+	}, []);
+
 	function onPlay() {
+		//TODO: useCallback
 		let errorMessages = 'Errors:\n';
 		if (!form.playerName || form.playerName === '') {
 			errorMessages += 'You must enter a name.\n';
@@ -64,7 +73,6 @@ const Home = () => {
 			.then((roomcode) => {
 				setLoading(false);
 				setForm({ ...form, roomcode: roomcode });
-
 				setToGame(true);
 			})
 			.finally(() => {
@@ -114,7 +122,7 @@ const Home = () => {
 						</button>
 					</div>
 					<div className="form-group pl-xs-0 pr-xs-0 mt-xs-0">
-						<HRWithTitle>Or</HRWithTitle>
+						<HRWithTitle>{t('or')}</HRWithTitle>
 					</div>
 					<div className="form-group pl-xs-0 pr-xs-0 mt-xs-0">
 						<button type="button" className="button button-primary" onClick={onHost}>
