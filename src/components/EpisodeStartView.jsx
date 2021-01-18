@@ -1,14 +1,11 @@
 import React from 'react';
+import NextPanel from '../common/NextPanel';
 
-const EpisodeStartView = ({ room, onNextClick }) => {
+const EpisodeStartView = ({ room, onNext }) => {
 	return (
-		<div>
-			<h1>Episode Start</h1>
-
-			<button type="button" className="button button-primary" onClick={this.onNextClick}>
-				Start Game
-			</button>
-		</div>
+		<NextPanel titleText="Welcome" nextButtonText="Start Game" onNext={onNext}>
+			<div>TODO: text describing the game</div>
+		</NextPanel>
 	);
 };
 

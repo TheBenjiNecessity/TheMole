@@ -10,35 +10,41 @@ import ExecutionView from './ExecutionView';
 import ExecutionWrapupView from './ExecutionWrapupView';
 import Room from '../models/room.model';
 import LobbyView from './LobbyView';
-import socketService from '../services/socket.service';
-import storageService from '../services/storage.service';
+import roomSocketService from '../services/socket-services/room-socket.service';
+import MoleRevealView from './MoleRevealView';
 
 const GameView = ({ room, isHost }) => {
 	function onNext(event) {
-		socketService.sendMessageToRoom(room.roomcode, 'move-next', storageService.getPlayer().name);
+		roomSocketService.moveNext(room.roomcode);
+	}
+
+	function onAgreeNext(event) {
+		roomSocketService.agreeToMoveNext(room.roomcode);
 	}
 
 	switch (room._state) {
 		case Room.ROOM_STATES.LOBBY:
 			return <LobbyView room={room} isHost={isHost} onNext={onNext} />;
 		case Room.ROOM_STATES.WELCOME:
-			return <WelcomeView />;
+			return <WelcomeView room={room} onNext={onAgreeNext} />;
+		case Room.ROOM_STATES.MOLE_REVEAL:
+			return <MoleRevealView room={room} onNext={onAgreeNext} />;
 		case Room.ROOM_STATES.EPISODE_START:
-			return <EpisodeStartView />;
+			return <EpisodeStartView room={room} />;
 		case Room.ROOM_STATES.IN_CHALLENGE:
-			return <ChallengeView />;
+			return <ChallengeView room={room} />;
 		case Room.ROOM_STATES.CHALLENGE_INTERMISSION:
-			return <ChallengeIntermissionView />;
+			return <ChallengeIntermissionView room={room} />;
 		case Room.ROOM_STATES.PRE_QUIZ_INTERMISSION:
-			return <PreQuizIntermissionView />;
+			return <PreQuizIntermissionView room={room} />;
 		case Room.ROOM_STATES.IN_QUIZ:
-			return <QuizView />;
+			return <QuizView room={room} />;
 		case Room.ROOM_STATES.POST_QUIZ_INTERMISSION:
-			return <PostQuizIntermissionView />;
+			return <PostQuizIntermissionView room={room} />;
 		case Room.ROOM_STATES.EXECUTION:
-			return <ExecutionView />;
+			return <ExecutionView room={room} />;
 		case Room.ROOM_STATES.EXECUTION_WRAPUP:
-			return <ExecutionWrapupView />;
+			return <ExecutionWrapupView room={room} />;
 		default:
 			return null;
 	}
