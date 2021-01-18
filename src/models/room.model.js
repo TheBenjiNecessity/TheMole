@@ -10,6 +10,7 @@ export default class Room {
 	static ROOM_STATES = {
 		LOBBY: 'lobby',
 		WELCOME: 'game-welcome',
+		MOLE_REVEAL: 'mole-reveal',
 		EPISODE_START: 'episode-start',
 		CHALLENGE_INTERMISSION: 'challenge-intermission',
 		IN_CHALLENGE: 'in-challenge',
