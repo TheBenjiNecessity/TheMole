@@ -1,5 +1,11 @@
 {
 	"common": {
 		"or": "or"
-	}
+	},
+	"lobby": {
+		"roomcode": "room code:",
+		"player": "player:",
+		"player_plural": "players:"
+	},
+	"welcome": {}
 }
